@@ -27,6 +27,7 @@ class RoundedExpansionTile extends StatefulWidget {
   final VisualDensity? visualDensity;
   final void Function()? onTap;
   final Duration? duration;
+  final double? trailingDuration;
   final List<Widget>? children;
   final Curve? curve;
   final EdgeInsets? childrenPadding;
@@ -40,6 +41,7 @@ class RoundedExpansionTile extends StatefulWidget {
       this.leading,
       this.trailing,
       this.duration,
+      this.trailingDuration,
       this.children,
       this.autofocus,
       this.contentPadding,
@@ -82,7 +84,7 @@ class _RoundedExpansionTileState extends State<RoundedExpansionTile>
   late AnimationController _iconController;
 
   // When the duration of the ListTile animation is NOT provided. This value will be used instead.
-  Duration defaultDuration = Duration(milliseconds: 500);
+  Duration defaultDuration = Duration(milliseconds: 250);
 
   @override
   void initState() {
@@ -210,7 +212,7 @@ class _RoundedExpansionTileState extends State<RoundedExpansionTile>
     if (widget.trailing != null) {
       if (_rotateTrailing!) {
         return RotationTransition(
-            turns: Tween(begin: 0.0, end: 0.5).animate(_iconController),
+            turns: Tween(begin: 0.0, end: widget.trailingDuration ?? 0.25).animate(_iconController),
             child: widget.trailing);
       } else {
         // If developer sets rotateTrailing to false the widget will just be returned.
